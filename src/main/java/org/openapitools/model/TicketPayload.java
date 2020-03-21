@@ -6,9 +6,14 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
@@ -22,7 +27,9 @@ import org.lockdown.app.jpa.User;
  * TicketPayload
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-03-21T20:43:12.797Z[GMT]")
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "ticket_type")
 public class TicketPayload {
 
     @Id
@@ -46,14 +53,12 @@ public class TicketPayload {
     @Transient
     private Integer userPin;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @Embedded
     @NotNull
     @JsonProperty("startPosition")
     private Address startPosition;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @Embedded
     @NotNull
     @JsonProperty("finishPosition")
     private Address finishPosition;
@@ -70,9 +75,6 @@ public class TicketPayload {
     @JsonProperty("arrivalTime")
     private OffsetDateTime arrivalTime;
 
-
-
-
     public User getUser() {
         return user;
     }
@@ -80,7 +82,6 @@ public class TicketPayload {
     public void setUser(User user) {
         this.user = user;
     }
-
 
     public TicketPayload hashIdentityNumber(String hashIdentityNumber) {
         this.hashIdentityNumber = hashIdentityNumber;

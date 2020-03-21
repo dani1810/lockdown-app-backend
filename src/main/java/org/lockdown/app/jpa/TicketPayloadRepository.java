@@ -2,6 +2,7 @@ package org.lockdown.app.jpa;
 
 import java.util.Set;
 
+import org.openapitools.model.TicketPayload;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,8 +10,8 @@ import org.springframework.stereotype.Repository;
  * Created by @author Jorge Machado on 21.03.20.
  */
 @Repository
-public interface LeaveTicketRepository extends JpaRepository<LeaveTicket, Long> {
+public interface TicketPayloadRepository extends JpaRepository<TicketPayload, Long> {
 
-    Set<LeaveTicket> findByUser(User user);
+    Set<TicketPayload> findByUser(User user);
 
 }

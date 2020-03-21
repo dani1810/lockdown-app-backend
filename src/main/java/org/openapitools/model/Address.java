@@ -17,17 +17,7 @@ import javax.validation.constraints.NotNull;
  * Address
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-03-21T20:43:12.797Z[GMT]")
-@Entity
 public class Address {
-
-    @Id
-    @GeneratedValue
-    @JsonIgnore
-    private long id;
-
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
-    private Set<TicketPayload> ticketPayloads;
 
     @JsonProperty("street")
     private String street;

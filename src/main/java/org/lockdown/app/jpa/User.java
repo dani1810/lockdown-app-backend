@@ -11,7 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+import org.openapitools.model.TicketPayload;
 
 /**
  * Created by @author Jorge Machado on 21.03.20.
@@ -27,13 +29,20 @@ public class User {
     @Column(name = "hashIdentityNumber")
     private String hashIdentityNumber;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", targetEntity = TicketPayload.class)
     @JsonIgnore
-    private Set<LeaveTicket> LeaveTickets;
+    private Set<TicketPayload> ticketPayloads;
 
     @Column(name = "userPin")
     private int userPin;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getHashIdentityNumber() {
         return hashIdentityNumber;
@@ -69,11 +78,12 @@ public class User {
         return Objects.hash(hashIdentityNumber, userPin);
     }
 
-    public Set<LeaveTicket> getLeaveTickets() {
-        return LeaveTickets;
+    public Set<TicketPayload> getTicketPayloads() {
+        return ticketPayloads;
     }
 
-    public void setLeaveTickets(Set<LeaveTicket> LeaveTickets) {
-        this.LeaveTickets = LeaveTickets;
+    public void setTicketPayloads(Set<TicketPayload> TicketPayloads) {
+        this.ticketPayloads = TicketPayloads;
     }
+
 }

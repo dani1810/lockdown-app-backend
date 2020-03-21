@@ -1,9 +1,10 @@
 package org.lockdown.app.services;
 
+import java.util.Collections;
 import java.util.Optional;
+import java.util.Set;
 
-import org.lockdown.app.jpa.LeaveTicket;
-import org.lockdown.app.jpa.LeaveTicketRepository;
+import org.lockdown.app.jpa.TicketPayloadRepository;
 import org.lockdown.app.jpa.User;
 import org.modelmapper.ModelMapper;
 import org.openapitools.model.TicketPayload;
@@ -15,10 +16,10 @@ import org.springframework.stereotype.Service;
  * Created by @author Jorge Machado on 21.03.20.
  */
 @Service
-public class LeaveTicketService implements ILeaveTicketService{
+public class TicketPayloadService implements ITicketPayloadService{
 
     @Autowired
-    LeaveTicketRepository leaveTicketRepository;
+    TicketPayloadRepository ticketPayloadRepository;
 
     @Autowired
     UserService userService;
@@ -30,17 +31,26 @@ public class LeaveTicketService implements ILeaveTicketService{
     @Override
     public TicketRequest addNewLeaveRequestToUser(TicketPayload payload) {
 
-        LeaveTicket leaveTicket = modelMapper.map(payload, LeaveTicket.class);
+        TicketPayload TicketPayload = modelMapper.map(payload, TicketPayload.class);
         Optional<User> dbUser = userService.getUserById(payload.getHashIdentityNumber(), payload.getUserPin());
         if(!dbUser.isPresent()){
             userService.createUser(payload.getHashIdentityNumber(), payload.getUserPin());
         }
-        leaveTicket.setUser(dbUser.get());
-        final LeaveTicket save = leaveTicketRepository.save(leaveTicket);
+        TicketPayload.setUser(dbUser.get());
+        final TicketPayload save = ticketPayloadRepository.save(TicketPayload);
         return createTRequestFromLTicket(save);
     }
 
-    private TicketRequest createTRequestFromLTicket(LeaveTicket save) {
+    @Override
+    public Set<TicketPayload> getByHashAndPin(String hash, int pin) {
+        final Optional<User> userById = userService.getUserById(hash, pin);
+        if (!userById.isPresent()){
+            return Collections.emptySet();
+        }
+        return ticketPayloadRepository.findByUser(userById.get());
+    }
+
+    private TicketRequest createTRequestFromLTicket(TicketPayload save) {
         return modelMapper.map(save, TicketRequest.class);
     }
 }

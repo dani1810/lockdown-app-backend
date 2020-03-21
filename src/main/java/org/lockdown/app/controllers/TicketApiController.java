@@ -2,9 +2,12 @@ package org.lockdown.app.controllers;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
-import org.lockdown.app.services.ILeaveTicketService;
+import javax.validation.constraints.NotNull;
+import org.lockdown.app.services.ITicketPayloadService;
 import org.lockdown.app.services.IUserService;
 import org.openapitools.api.TicketApi;
 import org.openapitools.model.TicketPayload;
@@ -22,7 +25,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 public class TicketApiController implements TicketApi {
 
     @Autowired
-    ILeaveTicketService leaveTicketService;
+    ITicketPayloadService ticketPayloadService;
 
     @Autowired
     IUserService userService;
@@ -42,12 +45,19 @@ public class TicketApiController implements TicketApi {
     @Override
     public ResponseEntity<TicketRequest> addTicketRequest(@Valid TicketPayload ticketPayload) {
 
-        final TicketRequest ticketRequest = leaveTicketService.addNewLeaveRequestToUser(ticketPayload);
+        final TicketRequest ticketRequest = ticketPayloadService.addNewLeaveRequestToUser(ticketPayload);
         return ResponseEntity.ok().body(ticketRequest);
     }
 
+
     @Override
     public ResponseEntity<List<TicketPayload>> findTicketRequestsByPin(Long pin, String hash) {
+        final Set<TicketPayload> byHashAndPin = ticketPayloadService.getByHashAndPin(hash, Math.toIntExact(pin));
+        return ResponseEntity.ok().body(byHashAndPin.stream().collect(Collectors.toList()));
+    }
+
+    @Override
+    public ResponseEntity<TicketRequest> getTicketRequest(Long id, @NotNull @Valid Long pin) {
         return null;
     }
 

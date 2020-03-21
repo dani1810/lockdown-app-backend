@@ -2,11 +2,15 @@ package org.openapitools.model;
 
 import java.util.Objects;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
 /**
  * FoodTicketPayload
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-03-21T20:43:12.797Z[GMT]")
-
+@Entity
+@DiscriminatorValue("food")
 public class FoodTicketPayload extends TicketPayload  {
 
   @Override

@@ -1,7 +1,7 @@
 package org.lockdown.app;
 
 import com.fasterxml.jackson.databind.Module;
-import org.lockdown.app.jpa.LeaveTicketRepository;
+import org.lockdown.app.jpa.TicketPayloadRepository;
 import org.lockdown.app.jpa.UserRepository;
 import org.openapitools.jackson.nullable.JsonNullableModule;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ public class OpenAPI2SpringBoot implements CommandLineRunner {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    LeaveTicketRepository repository;
+    TicketPayloadRepository repository;
 
     @Autowired
     UserRepository userRepository;
