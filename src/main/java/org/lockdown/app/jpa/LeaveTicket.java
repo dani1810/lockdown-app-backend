@@ -16,7 +16,6 @@ import org.openapitools.model.TicketPayload;
  * Created by @author Jorge Machado on 21.03.20.
  */
 @Entity
-@MappedSuperclass
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LeaveTicket extends TicketPayload {
 

@@ -37,6 +37,10 @@ public class LeaveTicketService implements ILeaveTicketService{
         }
         leaveTicket.setUser(dbUser.get());
         final LeaveTicket save = leaveTicketRepository.save(leaveTicket);
-        return ;
+        return createTRequestFromLTicket(save);
+    }
+
+    private TicketRequest createTRequestFromLTicket(LeaveTicket save) {
+        return modelMapper.map(save, TicketRequest.class);
     }
 }

@@ -50,7 +50,7 @@ public class WorkTicketPayload extends TicketPayload  {
 
   @Override
   public int hashCode() {
-    return Objects.hash(employerCodesuper.hashCode());
+    return Objects.hash(employerCode.hashCode());
   }
 
   @Override
