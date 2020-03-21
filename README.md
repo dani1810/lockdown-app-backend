@@ -20,6 +20,7 @@ Change default port value in application.properties
 Build on docker: 
     
        mvn com.google.cloud.tools:jib-maven-plugin:dockerBuild -Dimage=springio/gs-spring-boot-docker
+       docker run springio/gs-spring-boot-docker
 
 ## Validation from infected persons
      - Selfie app
