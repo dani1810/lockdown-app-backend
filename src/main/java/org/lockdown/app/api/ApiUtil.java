@@ -1,4 +1,4 @@
-package org.openapitools.api;
+package org.lockdown.app.api;
 
 import org.springframework.web.context.request.NativeWebRequest;
 

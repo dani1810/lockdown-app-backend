@@ -1,19 +1,14 @@
-package org.openapitools.model;
+package org.lockdown.app.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.openapitools.jackson.nullable.JsonNullable;
-import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
  * LeaveRequestAllOf
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-03-21T14:31:13.518Z[GMT]")
-
 public class LeaveRequestAllOf   {
   @JsonProperty("id")
   private Long id;

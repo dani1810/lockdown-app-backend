@@ -1,19 +1,31 @@
 package org.lockdown.app;
 
 import com.fasterxml.jackson.databind.Module;
+import org.lockdown.app.jpa.LeaveRequestRepository;
+import org.lockdown.app.jpa.UserRepository;
 import org.openapitools.jackson.nullable.JsonNullableModule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"org.lockdown.app", "org.openapitools.api" , "org.lockdown.app.config"})
+@ComponentScan(basePackages = {"org.lockdown.app", "org.lockdown.app.api" , "org.lockdown.app.config"})
 public class OpenAPI2SpringBoot implements CommandLineRunner {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    LeaveRequestRepository repository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public void run(String... arg0) throws Exception {

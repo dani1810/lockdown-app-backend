@@ -3,31 +3,24 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-package org.openapitools.api;
+package org.lockdown.app.api;
 
-import org.openapitools.model.Error;
-import org.openapitools.model.LeaveRequest;
-import org.openapitools.model.NewLeaveRequest;
+
+import org.lockdown.app.model.LeaveRequest;
+import org.lockdown.app.model.NewLeaveRequest;
 import io.swagger.annotations.*;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-03-21T14:31:13.518Z[GMT]")
 
@@ -55,20 +48,7 @@ public interface LeaverequestApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    default ResponseEntity<LeaveRequest> addLeaveRequest(@ApiParam(value = "Create a new LeaveRequest" ,required=true )  @Valid @RequestBody NewLeaveRequest newLeaveRequest) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "null";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
+    ResponseEntity<LeaveRequest> addLeaveRequest(@ApiParam(value = "Create a new LeaveRequest" ,required=true )  @Valid @RequestBody NewLeaveRequest newLeaveRequest);
 
     /**
      * DELETE /leaverequest/{id}
@@ -80,16 +60,13 @@ public interface LeaverequestApi {
      *         or unexpected error (status code 200)
      */
     @ApiOperation(value = "", nickname = "deletePet", notes = "deletes a LeaveRequest", tags={  })
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
         @ApiResponse(code = 204, message = "pet deleted"),
         @ApiResponse(code = 200, message = "unexpected error", response = Error.class) })
     @RequestMapping(value = "/leaverequest/{id}",
         produces = { "application/json" }, 
         method = RequestMethod.DELETE)
-    default ResponseEntity<Void> deletePet(@ApiParam(value = "ID to delete",required=true) @PathVariable("id") Long id,@ApiParam(value = "pin to of the ID to delete",required=true) @PathVariable("pin") Long pin) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
+    ResponseEntity<Void> deletePet(@ApiParam(value = "ID to delete",required=true) @PathVariable("id") Long id,@ApiParam(value = "pin to of the ID to delete",required=true) @PathVariable("pin") Long pin);
 
 
     /**
@@ -100,26 +77,16 @@ public interface LeaverequestApi {
      * @return Leave request response (status code 200)
      *         or unexpected error (status code 200)
      */
-    @ApiOperation(value = "", nickname = "findLeaveRequestsByPin", notes = "Returns all Leave requests identified by the pin", response = LeaveRequest.class, responseContainer = "List", tags={  })
+    @ApiOperation(value = "", nickname = "findLeaveRequestsByPin", notes = "Returns all Leave requests identified by the pin and hashIdentityNumber", response = LeaveRequest.class, responseContainer = "List", tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Leave request response", response = LeaveRequest.class, responseContainer = "List"),
         @ApiResponse(code = 200, message = "unexpected error", response = Error.class) })
     @RequestMapping(value = "/leaverequest/findByPin",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<List<LeaveRequest>> findLeaveRequestsByPin(@ApiParam(value = "pin of user",required=true) @PathVariable("pin") Long pin) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "null";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
+    ResponseEntity<List<LeaveRequest>> findLeaveRequestsByPin(
+            @ApiParam(value = "pin of user", required=true) @PathVariable("pin") Long pin,
+            @ApiParam(value = "hashIdentityNumber of user", required=true) @PathVariable("hashIdentityNumber") String hashIdentityNumber);
 
 
     /**
@@ -138,18 +105,6 @@ public interface LeaverequestApi {
     @RequestMapping(value = "/leaverequest/{id}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<LeaveRequest> getLeaveRequest(@ApiParam(value = "ID of the leave request",required=true) @PathVariable("id") Long id,@NotNull @ApiParam(value = "Pin for the ID", required = true) @Valid @RequestParam(value = "pin", required = true) Long pin) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "null";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
+    ResponseEntity<LeaveRequest> getLeaveRequest(@ApiParam(value = "ID of the leave request",required=true) @PathVariable("id") Long id,@NotNull @ApiParam(value = "Pin for the ID", required = true) @Valid @RequestParam(value = "pin", required = true) Long pin);
 
 }

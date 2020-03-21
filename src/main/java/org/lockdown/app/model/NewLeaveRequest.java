@@ -1,12 +1,10 @@
-package org.openapitools.model;
+package org.lockdown.app.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
-import org.openapitools.jackson.nullable.JsonNullable;
+
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -14,8 +12,7 @@ import javax.validation.constraints.*;
  * NewLeaveRequest
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-03-21T14:31:13.518Z[GMT]")
-
-public class NewLeaveRequest   {
+public class NewLeaveRequest  extends PojoObject {
   @JsonProperty("hashIdentityNumber")
   private String hashIdentityNumber;
 

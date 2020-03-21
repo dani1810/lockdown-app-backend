@@ -109,6 +109,12 @@ paths:
           schema:
             type: integer
             format: int64
+        - name: hashIdentityNumber
+          in: path
+          description: Hashed User Identification number
+          required: true
+          schema:
+            type: string
       responses:
         200:
           description: Leave request response
