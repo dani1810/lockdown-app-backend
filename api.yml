@@ -70,34 +70,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      delete:
-        description: deletes a TicketRequest
-        operationId: deletePet
-        parameters:
-          - name: id
-            in: path
-            description: ID to delete
-            required: true
-            schema:
-              type: integer
-              format: int64
-          - name: pin
-            in: path
-            description: pin to of the ID to delete
-            required: true
-            schema:
-              type: integer
-              format: int64
-        responses:
-          '204':
-            description: Ticket request deleted
-          default:
-            description: unexpected error
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
-  /ticket/findByPin:
+    delete:
+      description: deletes a TicketRequest
+      operationId: deletePet
+      parameters:
+        - name: id
+          in: path
+          description: ID to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: pin
+          in: path
+          description: pin to of the ID to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Ticket request deleted
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /ticket/findByPinAndHash:
     get:
       description: Returns all Ticket requests identified by the pin
       operationId: find ticket requests by pin
@@ -109,6 +109,12 @@ paths:
           schema:
             type: integer
             format: int64
+        - name: hash
+          in: path
+          description: hashIdentityNumber of the user
+          required: true
+          schema:
+            type: string
       responses:
         200:
           description: Ticket request response
