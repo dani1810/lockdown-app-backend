@@ -14,38 +14,38 @@ info:
 servers:
   - url: https://lockdown.api/api
 paths:
-  /leaverequest:
+  /ticket:
     post:
-      description: Create a new Leave Request
-      operationId: addLeaveRequest
+      description: Create a new Ticket Request
+      operationId: addTicketRequest
       requestBody:
-        description: Create a new LeaveRequest
+        description: Create a new TIcketRequest
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewLeaveRequest'
+              $ref: '#/components/schemas/TicketPayload'
       responses:
         '200':
-          description: Leave Request response
+          description: Ticket Request response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LeaveRequest'
+                $ref: '#/components/schemas/TicketRequest'
         default:
           description: unexpected error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /leaverequest/{id}:
+  /ticket/{id}:
     get:
       description: Returns a user based on a single ID
-      operationId: getLeaveRequest
+      operationId: getTicketRequest
       parameters:
         - name: id
           in: path
-          description: ID of the leave request
+          description: ID of the ticket request
           required: true
           schema:
             type: integer
@@ -58,49 +58,49 @@ paths:
             type: integer
             format: int64
       responses:
-        '200':
-          description: Leave request response
+        '200': 
+          description: Ticket request response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LeaveRequest'
+                $ref: '#/components/schemas/TicketRequest'
         default:
           description: unexpected error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-    delete:
-      description: deletes a LeaveRequest
-      operationId: deletePet
-      parameters:
-        - name: id
-          in: path
-          description: ID to delete
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: pin
-          in: path
-          description: pin to of the ID to delete
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '204':
-          description: pet deleted
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /leaverequest/findByPin:
+      delete:
+        description: deletes a TicketRequest
+        operationId: deletePet
+        parameters:
+          - name: id
+            in: path
+            description: ID to delete
+            required: true
+            schema:
+              type: integer
+              format: int64
+          - name: pin
+            in: path
+            description: pin to of the ID to delete
+            required: true
+            schema:
+              type: integer
+              format: int64
+        responses:
+          '204':
+            description: Ticket request deleted
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+  /ticket/findByPin:
     get:
-      description: Returns all Leave requests identified by the pin
-      operationId: find leave requests by pin
+      description: Returns all Ticket requests identified by the pin
+      operationId: find ticket requests by pin
       parameters:
         - name: pin
           in: path
@@ -111,13 +111,13 @@ paths:
             format: int64
       responses:
         200:
-          description: Leave request response
+          description: Ticket request response
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/LeaveRequest'
+                  $ref: '#/components/schemas/TicketPayload'
         default:
           description: unexpected error
           content:
@@ -127,17 +127,31 @@ paths:
 
 components:
   schemas:
-    LeaveRequest:
-      allOf:
-        - $ref: '#/components/schemas/NewLeaveRequest'
+    TicketRequest:
+      oneOf:
+        - $ref: '#/components/schemas/WorkTicketPayload'
+        - $ref: '#/components/schemas/FoodTicketPayload'
+        - $ref: '#/components/schemas/HealthTicketPayload'
+        - $ref: '#/components/schemas/HelpTicketPayload'
+        - $ref: '#/components/schemas/RecreationTicketPayload'
+        - $ref: '#/components/schemas/FamilyTicketPayload'
         - type: object
-          required:
-            - id
-          properties:
-            id:
-              type: integer
-              format: int64
-    NewLeaveRequest:
+      discriminator:
+        propertyName: reason
+        mapping:
+          work: WorkTicketPayload
+          food: FoodTicketPayload
+          health: HealthTicketPayload
+          help: HelpTicketPayload
+          recreation: RecreationTicketPayload
+          family: FamilyTicketPayload
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+    TicketPayload:
       type: object
       required:
         # Identify person
@@ -155,11 +169,14 @@ components:
         userPin:
           type: integer
         startPosition:
-          type: string
+          type: object
+          $ref: '#/components/schemas/Address'
         finishPosition:
-          type: string
+          type: object
+          $ref: '#/components/schemas/Address'
         reason:
           type: string
+          enum: [work,food,health,help,recreation,family]
         signature:
           type: string
         leaveTime:
@@ -168,6 +185,55 @@ components:
         arrivalTime:
           type: string
           format: date-time
+    WorkTicketPayload:
+      allOf:
+        - $ref: '#/components/schemas/TicketPayload'
+        - type: object
+      required:
+        - employerCode
+      properties:
+        employerCode: 
+          type: string
+    FoodTicketPayload:
+      allOf:
+        - $ref: '#/components/schemas/TicketPayload'
+        - type: object    
+    HealthTicketPayload:
+      allOf:
+        - $ref: '#/components/schemas/TicketPayload'
+        - type: object    
+    HelpTicketPayload:
+      allOf:
+        - $ref: '#/components/schemas/TicketPayload'
+        - type: object    
+    RecreationTicketPayload:
+      allOf:
+        - $ref: '#/components/schemas/TicketPayload'
+        - type: object    
+    FamilyTicketPayload:
+      allOf:
+        - $ref: '#/components/schemas/TicketPayload'
+        - type: object    
+    Address:
+      type: object
+      required:
+        - street
+        - houseNo
+        - postalCode
+        - city
+      properties:
+        street:
+          type: string
+        houseNo:
+          type: integer
+        postalCode:
+          type: string
+        city:
+          type: string
+        province:
+          type: string
+        country:
+          type: string
     Error:
       type: object
       required:
