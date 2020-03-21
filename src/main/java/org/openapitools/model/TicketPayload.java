@@ -1,18 +1,19 @@
-package org.lockdown.app.model;
+package org.openapitools.model;
 
+import java.time.OffsetDateTime;
 import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
-import java.time.OffsetDateTime;
-
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 
 /**
- * NewLeaveRequest
+ * TicketPayload
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-03-21T14:31:13.518Z[GMT]")
-public class NewLeaveRequest  extends PojoObject {
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-03-21T20:43:12.797Z[GMT]")
+
+public class TicketPayload   {
   @JsonProperty("hashIdentityNumber")
   private String hashIdentityNumber;
 
@@ -20,10 +21,10 @@ public class NewLeaveRequest  extends PojoObject {
   private Integer userPin;
 
   @JsonProperty("startPosition")
-  private String startPosition;
+  private Address startPosition;
 
   @JsonProperty("finishPosition")
-  private String finishPosition;
+  private Address finishPosition;
 
   @JsonProperty("reason")
   private String reason;
@@ -37,7 +38,7 @@ public class NewLeaveRequest  extends PojoObject {
   @JsonProperty("arrivalTime")
   private OffsetDateTime arrivalTime;
 
-  public NewLeaveRequest hashIdentityNumber(String hashIdentityNumber) {
+  public TicketPayload hashIdentityNumber(String hashIdentityNumber) {
     this.hashIdentityNumber = hashIdentityNumber;
     return this;
   }
@@ -58,7 +59,7 @@ public class NewLeaveRequest  extends PojoObject {
     this.hashIdentityNumber = hashIdentityNumber;
   }
 
-  public NewLeaveRequest userPin(Integer userPin) {
+  public TicketPayload userPin(Integer userPin) {
     this.userPin = userPin;
     return this;
   }
@@ -79,7 +80,7 @@ public class NewLeaveRequest  extends PojoObject {
     this.userPin = userPin;
   }
 
-  public NewLeaveRequest startPosition(String startPosition) {
+  public TicketPayload startPosition(Address startPosition) {
     this.startPosition = startPosition;
     return this;
   }
@@ -91,16 +92,17 @@ public class NewLeaveRequest  extends PojoObject {
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
+  @Valid
 
-  public String getStartPosition() {
+  public Address getStartPosition() {
     return startPosition;
   }
 
-  public void setStartPosition(String startPosition) {
+  public void setStartPosition(Address startPosition) {
     this.startPosition = startPosition;
   }
 
-  public NewLeaveRequest finishPosition(String finishPosition) {
+  public TicketPayload finishPosition(Address finishPosition) {
     this.finishPosition = finishPosition;
     return this;
   }
@@ -112,16 +114,17 @@ public class NewLeaveRequest  extends PojoObject {
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
+  @Valid
 
-  public String getFinishPosition() {
+  public Address getFinishPosition() {
     return finishPosition;
   }
 
-  public void setFinishPosition(String finishPosition) {
+  public void setFinishPosition(Address finishPosition) {
     this.finishPosition = finishPosition;
   }
 
-  public NewLeaveRequest reason(String reason) {
+  public TicketPayload reason(String reason) {
     this.reason = reason;
     return this;
   }
@@ -142,7 +145,7 @@ public class NewLeaveRequest  extends PojoObject {
     this.reason = reason;
   }
 
-  public NewLeaveRequest signature(String signature) {
+  public TicketPayload signature(String signature) {
     this.signature = signature;
     return this;
   }
@@ -163,7 +166,7 @@ public class NewLeaveRequest  extends PojoObject {
     this.signature = signature;
   }
 
-  public NewLeaveRequest leaveTime(OffsetDateTime leaveTime) {
+  public TicketPayload leaveTime(OffsetDateTime leaveTime) {
     this.leaveTime = leaveTime;
     return this;
   }
@@ -185,7 +188,7 @@ public class NewLeaveRequest  extends PojoObject {
     this.leaveTime = leaveTime;
   }
 
-  public NewLeaveRequest arrivalTime(OffsetDateTime arrivalTime) {
+  public TicketPayload arrivalTime(OffsetDateTime arrivalTime) {
     this.arrivalTime = arrivalTime;
     return this;
   }
@@ -208,22 +211,22 @@ public class NewLeaveRequest  extends PojoObject {
 
 
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    NewLeaveRequest newLeaveRequest = (NewLeaveRequest) o;
-    return Objects.equals(this.hashIdentityNumber, newLeaveRequest.hashIdentityNumber) &&
-        Objects.equals(this.userPin, newLeaveRequest.userPin) &&
-        Objects.equals(this.startPosition, newLeaveRequest.startPosition) &&
-        Objects.equals(this.finishPosition, newLeaveRequest.finishPosition) &&
-        Objects.equals(this.reason, newLeaveRequest.reason) &&
-        Objects.equals(this.signature, newLeaveRequest.signature) &&
-        Objects.equals(this.leaveTime, newLeaveRequest.leaveTime) &&
-        Objects.equals(this.arrivalTime, newLeaveRequest.arrivalTime);
+    TicketPayload ticketPayload = (TicketPayload) o;
+    return Objects.equals(this.hashIdentityNumber, ticketPayload.hashIdentityNumber) &&
+        Objects.equals(this.userPin, ticketPayload.userPin) &&
+        Objects.equals(this.startPosition, ticketPayload.startPosition) &&
+        Objects.equals(this.finishPosition, ticketPayload.finishPosition) &&
+        Objects.equals(this.reason, ticketPayload.reason) &&
+        Objects.equals(this.signature, ticketPayload.signature) &&
+        Objects.equals(this.leaveTime, ticketPayload.leaveTime) &&
+        Objects.equals(this.arrivalTime, ticketPayload.arrivalTime);
   }
 
   @Override
@@ -234,8 +237,8 @@ public class NewLeaveRequest  extends PojoObject {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class NewLeaveRequest {\n");
-    
+    sb.append("class TicketPayload {\n");
+
     sb.append("    hashIdentityNumber: ").append(toIndentedString(hashIdentityNumber)).append("\n");
     sb.append("    userPin: ").append(toIndentedString(userPin)).append("\n");
     sb.append("    startPosition: ").append(toIndentedString(startPosition)).append("\n");
@@ -252,7 +255,7 @@ public class NewLeaveRequest  extends PojoObject {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

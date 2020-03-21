@@ -3,7 +3,7 @@ package org.lockdown.app.exceptions;
 /**
  * Created by @author Jorge Machado on 21.03.20.
  */
-public class LeaveRequestOnFuture extends DomainException {
+public class LeaveTicketOnFuture extends DomainException {
 
     @Override
     public String toString() {

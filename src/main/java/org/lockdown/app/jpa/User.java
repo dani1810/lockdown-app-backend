@@ -12,14 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import org.lockdown.app.model.LeaveRequest;
 
 /**
  * Created by @author Jorge Machado on 21.03.20.
  */
 @Entity
 @Table(uniqueConstraints={@UniqueConstraint(columnNames={"hashIdentityNumber", "userPin"})})
-public class UserJPA {
+public class User {
 
     @Id
     @GeneratedValue
@@ -30,7 +29,7 @@ public class UserJPA {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
     @JsonIgnore
-    private Set<LeaveRequest> leaveRequests;
+    private Set<LeaveTicket> LeaveTickets;
 
     @Column(name = "userPin")
     private int userPin;
@@ -60,9 +59,9 @@ public class UserJPA {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        UserJPA userJPA = (UserJPA) o;
-        return userPin == userJPA.userPin &&
-                Objects.equals(hashIdentityNumber, userJPA.hashIdentityNumber);
+        User user = (User) o;
+        return userPin == user.userPin &&
+                Objects.equals(hashIdentityNumber, user.hashIdentityNumber);
     }
 
     @Override
@@ -70,11 +69,11 @@ public class UserJPA {
         return Objects.hash(hashIdentityNumber, userPin);
     }
 
-    public Set<LeaveRequest> getLeaveRequests() {
-        return leaveRequests;
+    public Set<LeaveTicket> getLeaveTickets() {
+        return LeaveTickets;
     }
 
-    public void setLeaveRequests(Set<LeaveRequest> leaveRequests) {
-        this.leaveRequests = leaveRequests;
+    public void setLeaveTickets(Set<LeaveTicket> LeaveTickets) {
+        this.LeaveTickets = LeaveTickets;
     }
 }

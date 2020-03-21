@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  */
 
 @ControllerAdvice
-public class LeaveRequestExceptionController {
+class LeaveTicketExceptionController {
 
 
     @ExceptionHandler( value = DomainException.class)
