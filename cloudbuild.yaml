@@ -8,6 +8,9 @@ steps:
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/long-memory-271810/github.com/lockdown-wirvsvirus/lockdown-app-backend:$BRANCH_NAME', '.']
+    volumes:
+      - name: 'jar'
+        path: /jar
 
   # Push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
