@@ -176,7 +176,6 @@ components:
           $ref: '#/components/schemas/Address'
         reason:
           type: string
-          enum: [work,food,health,help,recreation,family]
         signature:
           type: string
         leaveTime:
