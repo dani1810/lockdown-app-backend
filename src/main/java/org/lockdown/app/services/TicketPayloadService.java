@@ -2,6 +2,7 @@ package org.lockdown.app.services;
 
 import java.util.Collections;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -11,6 +12,7 @@ import org.lockdown.app.jpa.UserE;
 import org.modelmapper.ModelMapper;
 import org.lockdown.app.model.TicketPayload;
 import org.lockdown.app.model.TicketRequest;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +28,16 @@ public class TicketPayloadService implements ITicketPayloadService{
     @Autowired
     UserService userService;
 
-    @Autowired
-    private ModelMapper modelMapper;
+
+    private final ModelMapper modelMapper = new ModelMapper();
+
+    public  TicketPayloadService(){
+
+       /* modelMapper.typeMap(TicketPayload.class, TicketRequestE.class).addMappings( mapper -> {
+           mapper.map(TicketPayload::getStartPosition, TicketRequestE::setStartPositionE);
+            mapper.map(TicketPayload::getFinishPosition, TicketRequestE::setFinishPositionE);
+        });*/
+    }
 
 
     @Override
@@ -35,10 +45,14 @@ public class TicketPayloadService implements ITicketPayloadService{
 
         TicketRequestE ticketRequest = modelMapper.map(payload, TicketRequestE.class);
         Optional<UserE> dbUser = userService.getUserById(payload.getHashIdentityNumber(), payload.getUserPin());
-        if(!dbUser.isPresent()){
-            userService.createUser(payload.getHashIdentityNumber(), payload.getUserPin());
+
+        if(dbUser.isPresent()){
+            ticketRequest.setUser(dbUser.get());
+        }else{
+            UserE newUser = userService.createUser(payload.getHashIdentityNumber(), payload.getUserPin());
+            ticketRequest.setUser(newUser);
         }
-        ticketRequest.setUser(dbUser.get());
+
         final TicketRequestE save = ticketRequestloadRepository.save(ticketRequest);
         return createTRequestFromLTicket(save);
     }

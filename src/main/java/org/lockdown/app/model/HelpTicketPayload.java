@@ -9,8 +9,6 @@ import javax.persistence.Entity;
  * HelpTicketPayload
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-03-21T20:43:12.797Z[GMT]")
-@Entity
-@DiscriminatorValue("help")
 public class HelpTicketPayload extends TicketPayload  {
 
   @Override

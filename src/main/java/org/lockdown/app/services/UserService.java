@@ -18,13 +18,17 @@ public class UserService implements IUserService {
     private UserRepository userRepository;
 
     @Override
-    public Optional<UserE> getUserById(String hashedString, long pin) {
-        return null;
+    public Optional<UserE> getUserById(String hashedString, int pin) {
+        return userRepository.findByHashIdentityNumberAndUserPin(hashedString, pin);
     }
 
     @Override
-    public void createUser(String hashIdentityNumber, int userPin) {
-
+    public UserE createUser(String hashIdentityNumber, int userPin) {
+        UserE userE = new UserE();
+        userE.setUserId(userPin);
+        userE.setHashIdentityNumber(hashIdentityNumber);
+        final UserE save = userRepository.save(userE);
+        return save;
     }
 
 }

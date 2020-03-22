@@ -12,19 +12,17 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import org.lockdown.app.model.TicketPayload;
-import org.lockdown.app.model.TicketRequest;
 
 /**
  * User Entity
  */
-@Entity
+@Entity(name = "user")
 @Table(uniqueConstraints={@UniqueConstraint(columnNames={"hashIdentityNumber", "userPin"})})
 public class UserE {
 
     @Id
     @GeneratedValue
-    private long id;
+    private long userId;
 
     @Column(name = "hashIdentityNumber")
     private String hashIdentityNumber;
@@ -36,12 +34,12 @@ public class UserE {
     @Column(name = "userPin")
     private int userPin;
 
-    public long getId() {
-        return id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getHashIdentityNumber() {

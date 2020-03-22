@@ -12,8 +12,6 @@ import javax.validation.constraints.NotNull;
  * WorkTicketPayload
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-03-21T20:43:12.797Z[GMT]")
-@Entity
-@DiscriminatorValue("work")
 public class WorkTicketPayload extends TicketPayload  {
   @JsonProperty("employerCode")
   private String employerCode;

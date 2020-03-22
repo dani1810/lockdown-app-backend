@@ -10,8 +10,8 @@ import org.lockdown.app.jpa.UserE;
 public interface IUserService {
 
 
-    public Optional<UserE> getUserById(String hashedString, long pin);
+    public Optional<UserE> getUserById(String hashedString, int pin);
 
-    public void createUser(String hashIdentityNumber, int userPin);
+    public UserE createUser(String hashIdentityNumber, int userPin);
 
 }

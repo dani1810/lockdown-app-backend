@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -47,9 +48,11 @@ public class TicketRequest {
     private Integer userPin;
 
     @JsonProperty("startPosition")
+    @Embedded()
     private Address startPosition;
 
     @JsonProperty("finishPosition")
+    @Embedded
     private Address finishPosition;
 
     @JsonProperty("reason")

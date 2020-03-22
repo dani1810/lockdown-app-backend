@@ -7,11 +7,10 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import org.lockdown.app.services.ITicketPayloadService;
-import org.lockdown.app.services.IUserService;
 import org.lockdown.app.api.TicketApi;
 import org.lockdown.app.model.TicketPayload;
 import org.lockdown.app.model.TicketRequest;
+import org.lockdown.app.services.ITicketPayloadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

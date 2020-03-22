@@ -27,16 +27,9 @@ import org.lockdown.app.jpa.UserE;
  * TicketPayload
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-03-21T20:43:12.797Z[GMT]")
-@MappedSuperclass
+
 public class TicketPayload {
 
-    @Id
-    @GeneratedValue
-    @JsonIgnore
-    private long id;
-
-    @Version
-    private int version;
 
     @JsonProperty("hashIdentityNumber")
     private String hashIdentityNumber;
@@ -45,13 +38,11 @@ public class TicketPayload {
     @Transient
     private Integer userPin;
 
-    @Embedded
-    @NotNull
+    @Transient
     @JsonProperty("startPosition")
     private Address startPosition;
 
-    @Embedded
-    @NotNull
+    @Transient
     @JsonProperty("finishPosition")
     private Address finishPosition;
 
