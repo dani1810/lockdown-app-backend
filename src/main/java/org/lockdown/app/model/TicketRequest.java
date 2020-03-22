@@ -1,65 +1,54 @@
-package org.openapitools.model;
+package org.lockdown.app.model;
 
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import org.lockdown.app.jpa.User;
 
 /**
- * TicketPayload
+ * TicketRequest
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-03-21T20:43:12.797Z[GMT]")
-@Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "ticket_type")
-public class TicketPayload {
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "reason", visible = true)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = WorkTicketPayload.class, name = "work"),
+        @JsonSubTypes.Type(value = FoodTicketPayload.class, name = "food"),
+        @JsonSubTypes.Type(value = HealthTicketPayload.class, name = "health"),
+        @JsonSubTypes.Type(value = HelpTicketPayload.class, name = "help"),
+        @JsonSubTypes.Type(value = RecreationTicketPayload.class, name = "recreation"),
+        @JsonSubTypes.Type(value = FamilyTicketPayload.class, name = "family"),
+})
+@DiscriminatorColumn(name = "reason")
+@MappedSuperclass
+public class TicketRequest {
+
+    @JsonProperty("id")
     @Id
     @GeneratedValue
-    @JsonIgnore
-    private long id;
-
-    @Version
-    private int version;
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
-    @NotNull
-    private User user;
+    private Long id;
 
     @JsonProperty("hashIdentityNumber")
+    @Transient
     private String hashIdentityNumber;
 
     @JsonProperty("userPin")
     @Transient
     private Integer userPin;
 
-    @Embedded
-    @NotNull
     @JsonProperty("startPosition")
     private Address startPosition;
 
-    @Embedded
-    @NotNull
     @JsonProperty("finishPosition")
     private Address finishPosition;
 
@@ -75,15 +64,28 @@ public class TicketPayload {
     @JsonProperty("arrivalTime")
     private OffsetDateTime arrivalTime;
 
-    public User getUser() {
-        return user;
+    public TicketRequest id(Long id) {
+        this.id = id;
+        return this;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    /**
+     * Get id
+     *
+     * @return id
+     */
+    @ApiModelProperty(required = true, value = "")
+    @NotNull
+
+    public Long getId() {
+        return id;
     }
 
-    public TicketPayload hashIdentityNumber(String hashIdentityNumber) {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public TicketRequest hashIdentityNumber(String hashIdentityNumber) {
         this.hashIdentityNumber = hashIdentityNumber;
         return this;
     }
@@ -104,7 +106,7 @@ public class TicketPayload {
         this.hashIdentityNumber = hashIdentityNumber;
     }
 
-    public TicketPayload userPin(Integer userPin) {
+    public TicketRequest userPin(Integer userPin) {
         this.userPin = userPin;
         return this;
     }
@@ -125,7 +127,7 @@ public class TicketPayload {
         this.userPin = userPin;
     }
 
-    public TicketPayload startPosition(Address startPosition) {
+    public TicketRequest startPosition(Address startPosition) {
         this.startPosition = startPosition;
         return this;
     }
@@ -148,7 +150,7 @@ public class TicketPayload {
         this.startPosition = startPosition;
     }
 
-    public TicketPayload finishPosition(Address finishPosition) {
+    public TicketRequest finishPosition(Address finishPosition) {
         this.finishPosition = finishPosition;
         return this;
     }
@@ -171,7 +173,7 @@ public class TicketPayload {
         this.finishPosition = finishPosition;
     }
 
-    public TicketPayload reason(String reason) {
+    public TicketRequest reason(String reason) {
         this.reason = reason;
         return this;
     }
@@ -192,7 +194,7 @@ public class TicketPayload {
         this.reason = reason;
     }
 
-    public TicketPayload signature(String signature) {
+    public TicketRequest signature(String signature) {
         this.signature = signature;
         return this;
     }
@@ -213,7 +215,7 @@ public class TicketPayload {
         this.signature = signature;
     }
 
-    public TicketPayload leaveTime(OffsetDateTime leaveTime) {
+    public TicketRequest leaveTime(OffsetDateTime leaveTime) {
         this.leaveTime = leaveTime;
         return this;
     }
@@ -236,7 +238,7 @@ public class TicketPayload {
         this.leaveTime = leaveTime;
     }
 
-    public TicketPayload arrivalTime(OffsetDateTime arrivalTime) {
+    public TicketRequest arrivalTime(OffsetDateTime arrivalTime) {
         this.arrivalTime = arrivalTime;
         return this;
     }
@@ -266,20 +268,22 @@ public class TicketPayload {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        TicketPayload ticketPayload = (TicketPayload) o;
-        return Objects.equals(this.hashIdentityNumber, ticketPayload.hashIdentityNumber) &&
-                Objects.equals(this.userPin, ticketPayload.userPin) &&
-                Objects.equals(this.startPosition, ticketPayload.startPosition) &&
-                Objects.equals(this.finishPosition, ticketPayload.finishPosition) &&
-                Objects.equals(this.reason, ticketPayload.reason) &&
-                Objects.equals(this.signature, ticketPayload.signature) &&
-                Objects.equals(this.leaveTime, ticketPayload.leaveTime) &&
-                Objects.equals(this.arrivalTime, ticketPayload.arrivalTime);
+        TicketRequest ticketRequest = (TicketRequest) o;
+        return Objects.equals(this.id, ticketRequest.id) &&
+                Objects.equals(this.hashIdentityNumber, ticketRequest.hashIdentityNumber) &&
+                Objects.equals(this.userPin, ticketRequest.userPin) &&
+                Objects.equals(this.startPosition, ticketRequest.startPosition) &&
+                Objects.equals(this.finishPosition, ticketRequest.finishPosition) &&
+                Objects.equals(this.reason, ticketRequest.reason) &&
+                Objects.equals(this.signature, ticketRequest.signature) &&
+                Objects.equals(this.leaveTime, ticketRequest.leaveTime) &&
+                Objects.equals(this.arrivalTime, ticketRequest.arrivalTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(hashIdentityNumber,
+        return Objects.hash(id,
+                hashIdentityNumber,
                 userPin,
                 startPosition,
                 finishPosition,
@@ -292,8 +296,9 @@ public class TicketPayload {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class TicketPayload {\n");
+        sb.append("class TicketRequest {\n");
 
+        sb.append("    id: ").append(toIndentedString(id)).append("\n");
         sb.append("    hashIdentityNumber: ").append(toIndentedString(hashIdentityNumber)).append("\n");
         sb.append("    userPin: ").append(toIndentedString(userPin)).append("\n");
         sb.append("    startPosition: ").append(toIndentedString(startPosition)).append("\n");

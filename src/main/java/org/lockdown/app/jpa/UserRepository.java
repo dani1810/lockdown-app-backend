@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * Created by @author Jorge Machado on 21.03.20.
  */
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<UserE, Long> {
 
 
-    Optional<User> findByHashIdentityNumberAndUserPin(String hashIdentityNumber, Long userPin);
+    Optional<UserE> findByHashIdentityNumberAndUserPin(String hashIdentityNumber, Long userPin);
 }

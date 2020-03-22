@@ -1,4 +1,4 @@
-package org.openapitools.model;
+package org.lockdown.app.model;
 
 import java.util.Objects;
 

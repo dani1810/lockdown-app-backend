@@ -9,9 +9,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.lockdown.app.services.ITicketPayloadService;
 import org.lockdown.app.services.IUserService;
-import org.openapitools.api.TicketApi;
-import org.openapitools.model.TicketPayload;
-import org.openapitools.model.TicketRequest;
+import org.lockdown.app.api.TicketApi;
+import org.lockdown.app.model.TicketPayload;
+import org.lockdown.app.model.TicketRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,9 +26,6 @@ public class TicketApiController implements TicketApi {
 
     @Autowired
     ITicketPayloadService ticketPayloadService;
-
-    @Autowired
-    IUserService userService;
 
     private final NativeWebRequest request;
 
@@ -51,14 +48,16 @@ public class TicketApiController implements TicketApi {
 
 
     @Override
-    public ResponseEntity<List<TicketPayload>> findTicketRequestsByPin(Long pin, String hash) {
-        final Set<TicketPayload> byHashAndPin = ticketPayloadService.getByHashAndPin(hash, Math.toIntExact(pin));
+    public ResponseEntity<List<TicketRequest>> findTicketRequestsByPin(Long pin, String hash) {
+        final Set<TicketRequest> byHashAndPin = ticketPayloadService.getByHashAndPin(hash, Math.toIntExact(pin));
         return ResponseEntity.ok().body(byHashAndPin.stream().collect(Collectors.toList()));
     }
 
     @Override
     public ResponseEntity<TicketRequest> getTicketRequest(Long id, @NotNull @Valid Long pin) {
-        return null;
+        final Optional<TicketRequest> byTicketRequestIdAndPin = ticketPayloadService.getByTicketRequestIdAndPin(id,
+                Math.toIntExact(pin));
+        return ResponseEntity.of(byTicketRequestIdAndPin);
     }
 
 }

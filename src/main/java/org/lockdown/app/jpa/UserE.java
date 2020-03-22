@@ -11,16 +11,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
-import org.openapitools.model.TicketPayload;
+import org.lockdown.app.model.TicketPayload;
+import org.lockdown.app.model.TicketRequest;
 
 /**
- * Created by @author Jorge Machado on 21.03.20.
+ * User Entity
  */
 @Entity
 @Table(uniqueConstraints={@UniqueConstraint(columnNames={"hashIdentityNumber", "userPin"})})
-public class User {
+public class UserE {
 
     @Id
     @GeneratedValue
@@ -29,9 +29,9 @@ public class User {
     @Column(name = "hashIdentityNumber")
     private String hashIdentityNumber;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", targetEntity = TicketPayload.class)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @JsonIgnore
-    private Set<TicketPayload> ticketPayloads;
+    private Set<TicketRequestE> ticketRequests;
 
     @Column(name = "userPin")
     private int userPin;
@@ -68,9 +68,9 @@ public class User {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        User user = (User) o;
-        return userPin == user.userPin &&
-                Objects.equals(hashIdentityNumber, user.hashIdentityNumber);
+        UserE userE = (UserE) o;
+        return userPin == userE.userPin &&
+                Objects.equals(hashIdentityNumber, userE.hashIdentityNumber);
     }
 
     @Override
@@ -78,12 +78,12 @@ public class User {
         return Objects.hash(hashIdentityNumber, userPin);
     }
 
-    public Set<TicketPayload> getTicketPayloads() {
-        return ticketPayloads;
+    public Set<TicketRequestE> getTicketPayloads() {
+        return ticketRequests;
     }
 
-    public void setTicketPayloads(Set<TicketPayload> TicketPayloads) {
-        this.ticketPayloads = TicketPayloads;
+    public void setTicketPayloads(Set<TicketRequestE> ticketRequests) {
+        this.ticketRequests = ticketRequests;
     }
 
 }

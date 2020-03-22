@@ -1,4 +1,4 @@
-package org.openapitools.model;
+package org.lockdown.app.model;
 
 import java.util.Objects;
 
@@ -6,12 +6,12 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
- * HealthTicketPayload
+ * RecreationTicketPayload
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-03-21T20:43:12.797Z[GMT]")
 @Entity
-@DiscriminatorValue("heath")
-public class HealthTicketPayload extends TicketPayload  {
+@DiscriminatorValue("recreation")
+public class RecreationTicketPayload extends TicketPayload  {
 
   @Override
   public boolean equals(Object o) {
@@ -32,7 +32,7 @@ public class HealthTicketPayload extends TicketPayload  {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class HealthTicketPayload {\n");
+    sb.append("class RecreationTicketPayload {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("}");
     return sb.toString();

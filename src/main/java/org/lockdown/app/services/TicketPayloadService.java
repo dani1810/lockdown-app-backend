@@ -3,12 +3,14 @@ package org.lockdown.app.services;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.lockdown.app.jpa.TicketPayloadRepository;
-import org.lockdown.app.jpa.User;
+import org.lockdown.app.jpa.TicketRequestE;
+import org.lockdown.app.jpa.TicketRequestloadRepository;
+import org.lockdown.app.jpa.UserE;
 import org.modelmapper.ModelMapper;
-import org.openapitools.model.TicketPayload;
-import org.openapitools.model.TicketRequest;
+import org.lockdown.app.model.TicketPayload;
+import org.lockdown.app.model.TicketRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +21,7 @@ import org.springframework.stereotype.Service;
 public class TicketPayloadService implements ITicketPayloadService{
 
     @Autowired
-    TicketPayloadRepository ticketPayloadRepository;
+    TicketRequestloadRepository ticketRequestloadRepository;
 
     @Autowired
     UserService userService;
@@ -31,26 +33,42 @@ public class TicketPayloadService implements ITicketPayloadService{
     @Override
     public TicketRequest addNewLeaveRequestToUser(TicketPayload payload) {
 
-        TicketPayload TicketPayload = modelMapper.map(payload, TicketPayload.class);
-        Optional<User> dbUser = userService.getUserById(payload.getHashIdentityNumber(), payload.getUserPin());
+        TicketRequestE ticketRequest = modelMapper.map(payload, TicketRequestE.class);
+        Optional<UserE> dbUser = userService.getUserById(payload.getHashIdentityNumber(), payload.getUserPin());
         if(!dbUser.isPresent()){
             userService.createUser(payload.getHashIdentityNumber(), payload.getUserPin());
         }
-        TicketPayload.setUser(dbUser.get());
-        final TicketPayload save = ticketPayloadRepository.save(TicketPayload);
+        ticketRequest.setUser(dbUser.get());
+        final TicketRequestE save = ticketRequestloadRepository.save(ticketRequest);
         return createTRequestFromLTicket(save);
     }
 
     @Override
-    public Set<TicketPayload> getByHashAndPin(String hash, int pin) {
-        final Optional<User> userById = userService.getUserById(hash, pin);
+    public Set<TicketRequest> getByHashAndPin(String hash, int pin) {
+        final Optional<UserE> userById = userService.getUserById(hash, pin);
         if (!userById.isPresent()){
             return Collections.emptySet();
         }
-        return ticketPayloadRepository.findByUser(userById.get());
+        return createTRFromTRE(ticketRequestloadRepository.findByUser(userById.get()));
     }
 
-    private TicketRequest createTRequestFromLTicket(TicketPayload save) {
+    @Override
+    public Optional<TicketRequest> getByTicketRequestIdAndPin(long ticketId, int pin) {
+        final Optional<TicketRequestE> byId = ticketRequestloadRepository.findById(ticketId);
+        if (byId.isPresent() && byId.get().getUser().getUserPin() == pin){
+            return Optional.of(createTRequestFromLTicket(byId.get()));
+
+        }
+        return Optional.empty();
+    }
+
+    private TicketRequest createTRequestFromLTicket(TicketRequestE save) {
         return modelMapper.map(save, TicketRequest.class);
+    }
+
+    private Set<TicketRequest> createTRFromTRE(Set<TicketRequestE> e){
+
+        return e.stream().map(this::createTRequestFromLTicket).collect(Collectors.toSet());
+
     }
 }

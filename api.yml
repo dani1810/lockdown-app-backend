@@ -123,7 +123,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TicketPayload'
+                  $ref: '#/components/schemas/TicketRequest'
         default:
           description: unexpected error
           content:

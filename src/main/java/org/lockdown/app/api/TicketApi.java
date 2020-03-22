@@ -3,7 +3,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-package org.openapitools.api;
+package org.lockdown.app.api;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,9 +15,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import org.openapitools.model.Error;
-import org.openapitools.model.TicketPayload;
-import org.openapitools.model.TicketRequest;
+import org.lockdown.app.model.Error;
+import org.lockdown.app.model.TicketPayload;
+import org.lockdown.app.model.TicketRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -99,7 +99,7 @@ public interface TicketApi {
     @RequestMapping(value = "/ticket/findByPinAndHash",
         produces = { "application/json" },
         method = RequestMethod.GET)
-    ResponseEntity<List<TicketPayload>> findTicketRequestsByPin(
+    ResponseEntity<List<TicketRequest>> findTicketRequestsByPin(
             @ApiParam(value = "pin of user", required = true) @PathVariable("pin") Long pin,
             @ApiParam(value = "hashIdentityNumber of the user", required = true) @PathVariable("hash") String hash);
 
